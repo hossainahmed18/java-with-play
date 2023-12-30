@@ -4,25 +4,25 @@ package models;
 import java.util.List;
 
 public class ApiResponse {
-    private int count;
-    private List<Student> students;
-    private String csvFileBase64;
+    private int numberOfStudents;
+    private String csvFileAsBase64;
+    private String fileName;
 
-    public ApiResponse(int count, List<Student> students, String csvFileBase64) {
-        this.count = count;
-        this.students = students;
-        this.csvFileBase64 = csvFileBase64;
+    public ApiResponse(int numberOfStudents, String csvFileAsBase64, String fileName) {
+        this.numberOfStudents = numberOfStudents;
+        this.csvFileAsBase64 = csvFileAsBase64;
+        this.fileName = fileName;
     }
 
-    public int getCount() {
-        return count;
+    public int getNumberOfStudents() {
+        return numberOfStudents;
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public String getCSVFileAsBase64() {
+        return csvFileAsBase64;
     }
 
-    public String getCsvFileBase64() {
-        return csvFileBase64;
+    public String getFileName() {
+        return fileName;
     }
 }

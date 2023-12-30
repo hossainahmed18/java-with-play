@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api.services';
+import { ApiResponseForStudents } from './interfaces/ApiResponseForStudents';
 
 @Component({
   selector: 'app-root',
@@ -8,44 +9,34 @@ import { ApiService } from './services/api.services';
 })
 export class AppComponent implements OnInit {
   title = 'client-app-angular';
-  studentsName = "";
-  csvFileBase64 = "Rmlyc3QgTmFtZSxMYXN0IE5hbWUsQWdlLElECkpvaG4sRG9lLDI1LDEKSmFuZSxTbWl0aCwyMiwyCkJvYixKb2huc29uLDMwLDMKQWxleCxDYXJyZXksMjQsNApKYWNrLEZpbGwsMjQsNQo=";
-
+  studentsRecords: ApiResponseForStudents | undefined;
+  loadingDisabled = false;
+ 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-   // this.loadStudents();
-   this.downloadCsvFile();
   }
   loadStudents() {
-    this.apiService.getStudents().subscribe((studentsNameFromApi: string) => {
-      this.studentsName = studentsNameFromApi;
+    this.apiService.getStudents().subscribe((apiResponseForStudents: ApiResponseForStudents) => {
+      this.studentsRecords = apiResponseForStudents;
+      this.loadingDisabled = true;
     })
   }
 
-  private downloadCsvFile(): void {
-    if (!this.csvFileBase64) {
-      return;
+  public downloadCsvFile(): void {
+
+    if (this.studentsRecords) {
+      const csvContent = atob(this.studentsRecords.csvfileAsBase64);
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = this.studentsRecords.fileName;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      this.loadingDisabled = false;
+      this.studentsRecords = undefined;
     }
 
-    // Decode base64 to CSV content
-    const csvContent = atob(this.csvFileBase64);
-
-    // Convert CSV content to a Blob
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-
-    // Create a download link
-    const downloadLink = document.createElement('a');
-    downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = 'students.csv';
-
-    // Append the link to the document
-    document.body.appendChild(downloadLink);
-
-    // Trigger a click event to start the download
-    downloadLink.click();
-
-    // Remove the link from the document
-    document.body.removeChild(downloadLink);
   }
 }

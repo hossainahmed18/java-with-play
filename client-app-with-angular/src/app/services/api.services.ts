@@ -1,6 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { ApiResponseForStudents } from '../interfaces/ApiResponseForStudents';
 
 
 @Injectable({
@@ -13,10 +14,9 @@ export class ApiService {
     headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*',
     }),
-    responseType: 'text' as 'json', 
   };
   constructor(private http: HttpClient) {}
   getStudents(){
-    return this.http.get<string>(this.apiBaseUrl+'/students', this.httpOptions);
+    return this.http.get<ApiResponseForStudents>(this.apiBaseUrl+'/students', this.httpOptions);
   }
 }

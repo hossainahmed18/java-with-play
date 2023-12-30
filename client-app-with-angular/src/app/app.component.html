@@ -1,6 +1,4 @@
-
 <style>
-
   h1 {
     font-size: 3.125rem;
     color: var(--gray-900);
@@ -12,6 +10,7 @@
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
   }
+
   main {
     width: 100%;
     min-height: 100%;
@@ -26,8 +25,11 @@
 
 <main class="main">
   <div class="content">
-    <button (click)="loadStudents()">test</button>
-    <h1>Hi {{studentsName}}</h1>
+    <button *ngIf="loadingDisabled===false" (click)="loadStudents()">Load All the Students</button>
+    <div *ngIf="studentsRecords">
+      <p>Click the button below to Download</p>
+      <button (click)="downloadCsvFile()">{{studentsRecords.fileName}}</button>
+    </div>
   </div>
 </main>
 <router-outlet></router-outlet>

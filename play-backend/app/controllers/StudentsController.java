@@ -11,6 +11,8 @@ import java.util.Base64;
 import java.util.List;
 import models.Student;
 import models.ApiResponse;
+import java.util.Date;
+import java.text.SimpleDateFormat; 
 
 @Singleton
 public class StudentsController extends Controller {
@@ -30,8 +32,13 @@ public class StudentsController extends Controller {
                     student.getFirstName(), student.getLastName(), student.getAge(), student.getId()));
         }
         String csvFileBase64 = Base64.getEncoder().encodeToString(csvContent.toString().getBytes(StandardCharsets.UTF_8));
+ 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String formattedDate = dateFormat.format(new Date());
+        String sanitizedDate = formattedDate.replaceAll("[:T-]", "_");
+        String fileName = sanitizedDate + "_students.csv";
 
-        return ok(Json.toJson(new ApiResponse(students.size(), students, csvFileBase64)));
+        return ok(Json.toJson(new ApiResponse(students.size(), csvFileBase64, fileName )));
     }
     private List<Student> generateSampleStudents() {
         List<Student> students = new ArrayList<>();
