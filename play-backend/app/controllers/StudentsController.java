@@ -1,34 +1,107 @@
 package controllers;
 
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * This controller demonstrates how to use dependency injection to
- * bind a component into a controller class. The class contains an
- * action that shows an incrementing count to users. The {@link Counter}
- * object is injected by the Guice dependency injection system.
- */
 @Singleton
 public class StudentsController extends Controller {
-
-    private final String studentName = "Junayed";
 
     @Inject
     public StudentsController() {
     }
 
-    /**
-     * An action that responds with the {@link Counter}'s current
-     * count. The result is plain text. This action is mapped to
-     * <code>GET</code> requests with a path of <code>/count</code>
-     * requests by an entry in the <code>routes</code> config file.
-     */
     public Result getStudents() {
-        return ok(studentName);
+        List<Student> studentsList = generateSampleStudents();
+
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCount(studentsList.size());
+        apiResponse.setStudents(studentsList);
+
+        return ok(Json.toJson(apiResponse));
     }
 
+    private List<Student> generateSampleStudents() {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1, "John", "Doe", 25));
+        students.add(new Student(2, "Jane", "Smith", 22));
+        students.add(new Student(3, "Bob", "Johnson", 30));
+
+        return students;
+    }
+    public static class Student {
+        private int id;
+        private String firstName;
+        private String lastName;
+        private int age;
+
+        public Student() {
+        }
+
+        public Student(int id, String firstName, String lastName, int age) {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+    }
+    public static class ApiResponse {
+        private int count;
+        private List<Student> students;
+
+        public ApiResponse() {
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public List<Student> getStudents() {
+            return students;
+        }
+
+        public void setStudents(List<Student> students) {
+            this.students = students;
+        }
+    }
 }
