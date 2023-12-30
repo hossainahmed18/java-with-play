@@ -5,7 +5,9 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import models.Student;
 import models.ApiResponse;
@@ -18,13 +20,18 @@ public class StudentsController extends Controller {
     }
 
     public Result getStudents() {
-        List<Student> studentsList = generateSampleStudents();
+        List<Student> students = generateSampleStudents();
 
-        ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCount(studentsList.size());
-        apiResponse.setStudents(studentsList);
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append("First Name,Last Name,Age,ID\n");
 
-        return ok(Json.toJson(apiResponse));
+        for (Student student : students) {
+            csvContent.append(String.format("%s,%s,%d,%d\n",
+                    student.getFirstName(), student.getLastName(), student.getAge(), student.getId()));
+        }
+        String csvFileBase64 = Base64.getEncoder().encodeToString(csvContent.toString().getBytes(StandardCharsets.UTF_8));
+
+        return ok(Json.toJson(new ApiResponse(students.size(), students, csvFileBase64)));
     }
     private List<Student> generateSampleStudents() {
         List<Student> students = new ArrayList<>();
