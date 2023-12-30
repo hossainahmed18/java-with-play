@@ -25,3 +25,8 @@ How To Run the Applications:
         
    iv. command to run the frontend app
         ```npm start```
+
+   v. open front app to browser  <img width="1092" alt="image" src="https://github.com/hossainahmed18/java-with-play/assets/43014424/a9030e65-63f3-46fd-ac97-2f4fa299341c">
+
+   vi. click the button to download data as csv <img width="668" alt="image" src="https://github.com/hossainahmed18/java-with-play/assets/43014424/f4133020-ff72-4a39-b551-64441e690006">
+
