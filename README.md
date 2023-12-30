@@ -12,8 +12,14 @@ How To Run the Applications:
    ii.  command to run the backend app
         ```sbt run```
         ( *** make sure you have sbt installed in you pc)
+   
+    (Backend should be run on port ```9000``` if run on different port then, change apiBaseUrl with correct port on frontend app :
 
-3. Running the Frontend:
+
+    <img width="1137" alt="image" src="https://github.com/hossainahmed18/java-with-play/assets/43014424/1e70c96c-8a19-42cd-b930-464ed43259cd">
+
+
+4. Running the Frontend:
    i.   If you don't have angular cli installed on your pc, then run:
         ```npm install -g @angular/cli```
 
