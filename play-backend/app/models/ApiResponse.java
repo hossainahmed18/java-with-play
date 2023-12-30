@@ -1,16 +1,13 @@
-// models/ApiResponse.java
 package models;
-
-import java.util.List;
 
 public class ApiResponse {
     private int numberOfStudents;
-    private String csvFileAsBase64;
+    private String excelFileAsBase64;
     private String fileName;
 
-    public ApiResponse(int numberOfStudents, String csvFileAsBase64, String fileName) {
+    public ApiResponse(int numberOfStudents, String excelFileAsBase64, String fileName) {
         this.numberOfStudents = numberOfStudents;
-        this.csvFileAsBase64 = csvFileAsBase64;
+        this.excelFileAsBase64 = excelFileAsBase64;
         this.fileName = fileName;
     }
 
@@ -18,8 +15,8 @@ public class ApiResponse {
         return numberOfStudents;
     }
 
-    public String getCSVFileAsBase64() {
-        return csvFileAsBase64;
+    public String getExcelFileAsBase64() {
+        return excelFileAsBase64;
     }
 
     public String getFileName() {

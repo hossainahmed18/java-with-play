@@ -28,7 +28,7 @@
     <button *ngIf="loadingDisabled===false" (click)="loadStudents()">Load All the Students</button>
     <div *ngIf="studentsRecords">
       <p>Click the button below to Download</p>
-      <button (click)="downloadCsvFile()">{{studentsRecords.fileName}}</button>
+      <button (click)="downloadExcelFile()">{{studentsRecords.fileName}}</button>
     </div>
   </div>
 </main>
