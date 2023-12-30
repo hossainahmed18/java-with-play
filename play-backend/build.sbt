@@ -12,6 +12,8 @@ lazy val root = (project in file("."))
       // Testing libraries for dealing with CompletionStage...
       "org.assertj" % "assertj-core" % "3.24.2" % Test,
       "org.awaitility" % "awaitility" % "4.2.0" % Test,
+      "org.apache.poi" % "poi" % "4.1.2",
+      "org.apache.poi" % "poi-ooxml" % "4.1.2"
     ),
     javacOptions ++= Seq(
       "-encoding", "UTF-8",
